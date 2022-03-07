@@ -208,7 +208,7 @@ class TimerView(AbstractTimerView):
     def posToSeconds(self, pos: QPoint) -> int:
         pos_from_center = pos - self.rect().center()
         theta = atan2(-pos_from_center.x(), +pos_from_center.y())
-        print('theta:', theta)
+        #print('theta:', theta)
         return self.radianToSeconds(theta)
 
     def mousePressEvent(self, event: QMouseEvent) -> None:
@@ -218,7 +218,7 @@ class TimerView(AbstractTimerView):
                     self._dragging = True
                     self._engine.pause()
                 secs = self.posToSeconds(event.pos())
-                print(secs)
+                #print(secs)
                 self.setEngineTime(Time(secs))
 
         return super().mousePressEvent(event)

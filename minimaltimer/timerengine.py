@@ -29,7 +29,7 @@ class TimerEngine(QObject):
             return
         self._time.setSeconds(self._time.getSeconds() - 1)
         self.timeChanged.emit()
-        print(self._time.getSeconds())
+        #print(self._time.getSeconds())
         if self._time.getSeconds() == 0:
             self.timeout.emit()
 
