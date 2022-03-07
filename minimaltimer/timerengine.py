@@ -24,7 +24,7 @@ class TimerEngine(QObject):
     def setTime(self, time: Time) -> None:
         if time.getSeconds() < 0:
             # Invalid time
-            pass
+            return
         if self._time == time:
             return
         self._time = time

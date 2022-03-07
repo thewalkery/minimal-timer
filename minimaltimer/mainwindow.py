@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QSizePolicy
 
 from minimaltimer.timerengine import TimerEngine
 from minimaltimer.timerview import SpinboxTimerView, TimerView
@@ -17,10 +17,13 @@ class MainWindow(QMainWindow):
         self._centralwidget = QWidget()
         self.setCentralWidget(self._centralwidget)
         self.setupCentralWidget()
+        self.resize(640, 640)
 
     def setupCentralWidget(self) -> None:
         self._centralwidget.setLayout(QVBoxLayout())
         self._centralwidget.layout().addWidget(self._timerview)
+        self._timerview.setSizePolicy(QSizePolicy.Policy.Expanding, 
+                                      QSizePolicy.Policy.Expanding)
         self._centralwidget.layout().addWidget(self._optionsbar)
 
 
