@@ -8,6 +8,7 @@ from minimaltimer.optionsbar import OptionsBar
 class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget = None) -> None:
         super().__init__(parent)
+        self.setWindowTitle("Minimal Timer")
         self._timerview = TimerView(self)
         self._timerengine = TimerEngine(self)
         self._timerview.setEngine(self._timerengine)
@@ -25,5 +26,3 @@ class MainWindow(QMainWindow):
         self._timerview.setSizePolicy(QSizePolicy.Policy.Expanding, 
                                       QSizePolicy.Policy.Expanding)
         self._centralwidget.layout().addWidget(self._optionsbar)
-
-

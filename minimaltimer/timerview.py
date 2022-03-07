@@ -15,9 +15,13 @@ class AbstractTimerView(QWidget):
         self._engine = engine
         if self._engine:
             self._engine.timeChanged.connect(self.onEngineTimeChanged)
-            self.displayTime(self._engine.getTime())
+            self._engine.timeout.connect(self.onEngineTimeout)
+            self.handleTimeChanged(self._engine.getTime())
 
-    def displayTime(self, time: Time) -> None:
+    def handleTimeChanged(self, time: Time) -> None:
+        pass
+
+    def handleTimeout(self) -> None:
         pass
 
     def getEngineTime(self) -> Time:
@@ -35,7 +39,14 @@ class AbstractTimerView(QWidget):
     def onEngineTimeChanged(self) -> None:
         if not self._engine:
             return
-        self.displayTime(self._engine.getTime())
+        self.handleTimeChanged(self._engine.getTime())
+
+    @pyqtSlot()
+    def onEngineTimeout(self) -> None:
+        if not self._engine:
+            return
+        self.handleTimeout()
+
 
 class SpinboxTimerView(AbstractTimerView):
     def __init__(self, parent: QWidget = None) -> None:
@@ -53,7 +64,7 @@ class SpinboxTimerView(AbstractTimerView):
         self.layout().addWidget(self._spinbox)
         self.layout().addWidget(self._startButton)
 
-    def displayTime(self, time: Time) -> None:
+    def handleTimeChanged(self, time: Time) -> None:
         if self._editing == True:
             # ignore 
             return
@@ -93,20 +104,14 @@ class TimerView(AbstractTimerView):
         return distance(pos, center) <= self.getRadius()
 
     def paintEvent(self, event: QPaintEvent) -> None:
-        
-
         painter = QPainter(self)
-
         side = min(self.width(), self.height())
-
         painter.setViewport((self.width() - side) // 2, 
                             (self.height() - side) // 2,
                             side, side)
         painter.setWindow(-self.WINDOW_SIDE // 2, -self.WINDOW_SIDE // 2,
                           self.WINDOW_SIDE, self.WINDOW_SIDE)
-
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-
         self.drawClockScale(painter)
         self.drawClockHand(painter)
 
@@ -188,8 +193,11 @@ class TimerView(AbstractTimerView):
         painter.drawPath(path)
         painter.restore()
 
-    def displayTime(self, time: Time) -> None:
+    def handleTimeChanged(self, time: Time) -> None:
         self.repaint()
+
+    def handleTimeout(self) -> None:
+        QMessageBox.information(self, "Timeout", "Timeout")
 
     def secondsToRadian(self, secs: int) -> float:
         return secs * pi / 1800
@@ -208,6 +216,7 @@ class TimerView(AbstractTimerView):
             if self.isPosInClock(event.pos()):
                 if not self._dragging:
                     self._dragging = True
+                    self._engine.pause()
                 secs = self.posToSeconds(event.pos())
                 print(secs)
                 self.setEngineTime(Time(secs))
@@ -217,6 +226,11 @@ class TimerView(AbstractTimerView):
     def mouseMoveEvent(self, event: QMouseEvent) -> None:
         if event.buttons() & Qt.MouseButton.LeftButton:
             if self.isPosInClock(event.pos()):
+                if not self._dragging:
+                    self._dragging = True
+                    self._engine.pause()
+
+            if self._dragging:
                 secs = self.posToSeconds(event.pos())
                 prevTime = self.getEngineTime()
 
@@ -233,5 +247,6 @@ class TimerView(AbstractTimerView):
         if event.button() == Qt.MouseButton.LeftButton:
             if self._dragging:
                 self._dragging = False
+                self._engine.resume()
 
         return super().mouseReleaseEvent(event)
