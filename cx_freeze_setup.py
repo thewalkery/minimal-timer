@@ -15,5 +15,5 @@ setup(
     version="1.0",
     description="Minimal timer",
     options={"build_exe": build_exe_options},
-    executables=[Executable("run.py", base=base)],
+    executables=[Executable("minimaltimer/app.py", base=base)],
 )
