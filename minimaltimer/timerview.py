@@ -1,8 +1,8 @@
 from cmath import cos, pi, sin, sqrt
 from math import atan2
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from qtpy.QtWidgets import *
+from qtpy.QtCore import *
+from qtpy.QtGui import *
 from minimaltimer.timerengine import TimerEngine
 from minimaltimer.time import Time
 
@@ -35,13 +35,13 @@ class AbstractTimerView(QWidget):
             return
         self._engine.setTime(time)
 
-    @pyqtSlot()
+    @Slot()
     def onEngineTimeChanged(self) -> None:
         if not self._engine:
             return
         self.handleTimeChanged(self._engine.getTime())
 
-    @pyqtSlot()
+    @Slot()
     def onEngineTimeout(self) -> None:
         if not self._engine:
             return
@@ -73,11 +73,11 @@ class SpinboxTimerView(AbstractTimerView):
         self._spinbox.setValue(time.getSeconds())
         self._spinbox.blockSignals(wasBlocked)
 
-    @pyqtSlot()
+    @Slot()
     def onSpinboxValueChanged(self) -> None:
         self._editing = True
 
-    @pyqtSlot()
+    @Slot()
     def onStartButtonClicked(self) -> None:
         self._editing = False
         self.setEngineTime(Time(self._spinbox.value()))

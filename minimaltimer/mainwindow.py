@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QSizePolicy
-from PyQt5.QtCore import Qt
+from qtpy.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QSizePolicy
+from qtpy.QtCore import Qt
 from minimaltimer.timerengine import TimerEngine
 from minimaltimer.timerview import SpinboxTimerView, TimerView
 from minimaltimer.optionsbar import OptionsBar

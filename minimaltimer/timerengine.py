@@ -1,11 +1,11 @@
-from PyQt5.QtCore import QObject, QTimerEvent
-from PyQt5.QtCore import pyqtSignal
+from qtpy.QtCore import QObject, QTimerEvent
+from qtpy.QtCore import Signal
 from minimaltimer.time import Time
 
 
 class TimerEngine(QObject):
-    timeChanged = pyqtSignal()
-    timeout = pyqtSignal()
+    timeChanged = Signal()
+    timeout = Signal()
 
     def __init__(self, parent: QObject = None) -> None:
         super().__init__(parent)

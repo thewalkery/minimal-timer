@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication
+from qtpy.QtWidgets import QApplication
 from minimaltimer.mainwindow import MainWindow
 
 if __name__ == '__main__':

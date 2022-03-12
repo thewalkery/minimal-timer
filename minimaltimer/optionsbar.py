@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton
+from qtpy.QtWidgets import QWidget, QHBoxLayout, QPushButton
 
 class OptionsBar(QWidget):
     def __init__(self, parent: QWidget = None) -> None:
