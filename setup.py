@@ -32,3 +32,30 @@ setup(name='Minimal Timer',
       #pyskel=pyskel.scripts.cli:cli
       #"""
       )
+
+'''
+setup(name='pyskel',
+      version='0.0.1',
+      description=u"Skeleton of a Python package",
+      long_description=long_description,
+      classifiers=[],
+      keywords='',
+      author=u"Sean Gillies",
+      author_email='sean@mapbox.com',
+      url='https://github.com/mapbox/pyskel',
+      license='MIT',
+      packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
+      include_package_data=True,
+      zip_safe=False,
+      install_requires=[
+          'click'
+      ],
+      extras_require={
+          'test': ['pytest'],
+      },
+      entry_points="""
+      [console_scripts]
+      pyskel=pyskel.scripts.cli:cli
+      """
+      )
+'''
