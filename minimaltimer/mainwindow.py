@@ -1,15 +1,16 @@
 from qtpy.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QSizePolicy
 from qtpy.QtCore import Qt
+from qtpy.QtGui import QIcon
 from minimaltimer.timerengine import TimerEngine
 from minimaltimer.timerview import SpinboxTimerView, TimerView
 from minimaltimer.optionsbar import OptionsBar
-
 
 class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget = None) -> None:
         super().__init__(parent)
         self.setWindowTitle("Minimal Timer v1.0")
         self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint)
+
         self._timerview = TimerView(self)
         self._timerengine = TimerEngine(self)
         self._timerview.setEngine(self._timerengine)
